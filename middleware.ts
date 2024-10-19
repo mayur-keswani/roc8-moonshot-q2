@@ -14,7 +14,7 @@ export function middleware(req: NextRequest) {
     }
     // Redirect to login if the user is not logged in or if the auth data is invalid
     if (!parsedAuth || !parsedAuth.isLoggedIn) {
-        return NextResponse.redirect(new pageURL('/login', req.url));
+        return NextResponse.redirect(new URL('/login', req.url)); 
     }
 
     // Continue to the requested page if the user is authenticated
