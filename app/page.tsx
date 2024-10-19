@@ -17,7 +17,7 @@ import { getCookie, setCookie } from "./helper";
 import { useSearchParams, useRouter } from "next/navigation";
 import Select from "react-select";
 import axios from "axios";
-// import { AuthContext } from "./context/AuthContext";
+import { AuthContext } from "./context/AuthContext";
 
 export default function Home() {
   const router = useRouter();
@@ -32,10 +32,10 @@ export default function Home() {
     startDate: new Date(new Date().getFullYear() - 3, 0, 1),
     endDate: new Date(),
   });
-  // const {
-  //   onLogout,
-  //   auth: { username },
-  // } = useContext(AuthContext);
+  const {
+    onLogout,
+    auth: { username },
+  } = useContext(AuthContext);
   const handleRangeChange = (ranges: any) => {
     console.log({ ranges });
     setDateRange({
@@ -136,13 +136,13 @@ export default function Home() {
   return (
     <div className="Analytics">
       <header className="flex justify-end items-center">
-        {/* <span className="text-gray-900">Hello {username}!</span>
+        <span className="text-gray-900">Hello {username}!</span>
         <button
           className="p-2 m-2 bg-red-600 text-white font-semibold"
           onClick={onLogout}
         >
           Logout
-        </button> */}
+        </button>
       </header>
       <main>
         {isLoading ? (

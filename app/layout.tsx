@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-
-
+import AuthContextProvider from "./context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        {children}
+      <body className={`antialiased`}>
+        <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
   );
