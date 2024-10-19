@@ -1,3 +1,4 @@
+'use client';
 import { useRef, useMemo } from "react";
 import { Line } from "react-chartjs-2";
 import {
@@ -17,7 +18,6 @@ import {
 import { MdOutlineZoomInMap, MdOutlineZoomOutMap } from "react-icons/md";
 import { RxReset } from "react-icons/rx";
 import { paredExcelDateCode } from "../helper";
-import { LiaEthereum } from "react-icons/lia";
 import { isAfter, isBefore, parse } from "date-fns";
 
 Chart.register(

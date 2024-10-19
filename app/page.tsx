@@ -1,13 +1,13 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import BarChart from "./components/BarChart";
+const BarChart = dynamic(() => import("./components/BarChart"), { ssr: false });
 import {
   ChartCategoriesType,
   FilterCategoryType,
   FiltersType,
   excelDataType,
 } from "./types/custTypes";
-import LineChart from "./components/LineChat";
+const LineChart = dynamic(() => import("./components/LineChat"), { ssr: false });
 const DateRangePicker = dynamic(() => import("react-date-range").then(mod => mod.DateRangePicker), { ssr: false });
 import format from "date-fns/format";
 import "react-date-range/dist/styles.css"; // main style file
@@ -91,7 +91,7 @@ export default function Home() {
       });
     }
   };
-  
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       (async () => {
