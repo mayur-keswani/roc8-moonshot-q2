@@ -1,11 +1,11 @@
 "use client";
-import { SetStateAction, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BarChart from "./components/BarChart";
 import {
   ChartCategoriesType,
   FilterCategoryType,
   FiltersType,
-  excelDataType
+  excelDataType,
 } from "./types/custTypes";
 import LineChart from "./components/LineChat";
 import { DateRangePicker } from "react-date-range";
@@ -93,24 +93,26 @@ export default function Home() {
   };
 
   useEffect(() => {
-    (async () => {
-      await fetchData();
-      let queryParamsArray: FiltersType[] = [];
-      if (searchParams.size > 0) {
-        searchParams.forEach((value, key) => {
-          queryParamsArray.push({
-            label: value,
-            value,
-            group: key as FilterCategoryType,
+    if (typeof window !== "undefined") {
+      (async () => {
+        await fetchData();
+        let queryParamsArray: FiltersType[] = [];
+        if (searchParams.size > 0) {
+          searchParams.forEach((value, key) => {
+            queryParamsArray.push({
+              label: value,
+              value,
+              group: key as FilterCategoryType,
+            });
           });
-        });
-        setCookie("filters", JSON.stringify(queryParamsArray));
-        setFilters(queryParamsArray);
-      } else {
-        let cookieFilters = getCookie("filters");
-        setFilters(cookieFilters);
-      }
-    })();
+          setCookie("filters", JSON.stringify(queryParamsArray));
+          setFilters(queryParamsArray);
+        } else {
+          let cookieFilters = getCookie("filters");
+          setFilters(cookieFilters);
+        }
+      })();
+    }
   }, []);
 
   const options: {
@@ -139,7 +141,9 @@ export default function Home() {
         <span className="text-gray-900">Hello {username}!</span>
         <button
           className="p-2 m-2 bg-red-600 text-white font-semibold"
-          onClick={()=>{onLogout()}}
+          onClick={() => {
+            onLogout();
+          }}
         >
           Logout
         </button>
