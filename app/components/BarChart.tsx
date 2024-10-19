@@ -91,7 +91,6 @@ const BarChart: React.FC<BarChatPagePropType> = ({
           return true;
         }
       });
-      console.log({ filteredData });
       filteredData.forEach((record) => {
         totalTimeSpentOnA += record["A"];
         totalTimeSpentOnB += record["B"];

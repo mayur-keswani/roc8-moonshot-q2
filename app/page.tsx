@@ -9,14 +9,12 @@ import {
 } from "./types/custTypes";
 import LineChart from "./components/LineChat";
 const DateRangePicker = dynamic(() => import("react-date-range").then(mod => mod.DateRangePicker), { ssr: false });
-import { addDays } from "date-fns";
 import format from "date-fns/format";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { getCookie, setCookie } from "./helper";
 import { useSearchParams, useRouter } from "next/navigation";
-const Select = dynamic(() => import("react-select"));
-// import Select from "react-select";
+const Select = dynamic(() => import("react-select"),{ ssr: false });
 import axios from "axios";
 import { AuthContext } from "./context/AuthContext";
 import dynamic from "next/dynamic";
@@ -39,7 +37,6 @@ export default function Home() {
     auth: { username },
   } = useContext(AuthContext);
   const handleRangeChange = (ranges: any) => {
-    console.log({ ranges });
     setDateRange({
       startDate: ranges.range1.startDate,
       endDate: ranges.range1.endDate,
@@ -94,7 +91,7 @@ export default function Home() {
       });
     }
   };
-
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       (async () => {

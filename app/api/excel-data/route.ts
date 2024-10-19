@@ -13,7 +13,6 @@ export async function GET(request: Request) {
     let workbook = XLSX.read(fileBuffer, { type: "buffer" });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     let jsonData: extractedExcelData[] = XLSX.utils.sheet_to_json(sheet);
-    console.log({jsonData})
     let updatedJsonData = jsonData.map((record) => ({
       ...record,
       Day: paredExcelDateCode(record.Day),

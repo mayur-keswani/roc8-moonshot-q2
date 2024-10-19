@@ -2,17 +2,13 @@ const XLSX = require('xlsx');
 import Cookies from 'universal-cookie';
 
 export function setCookie(key: string, value: string) {
-    if (typeof window !== "undefined") {
-        const cookies = new Cookies();
-        cookies.set(key, value);
-    }
+    const cookies = new Cookies();
+    cookies.set(key, value);
 
 }
 export function getCookie(key: string) {
-    if (typeof window !== "undefined") {
-        const cookies = new Cookies();
-        return cookies.get(key);
-    }
+    const cookies = new Cookies();
+    return cookies.get(key);
 }
 
 export function paredExcelDateCode(excelSerialDate: number) {

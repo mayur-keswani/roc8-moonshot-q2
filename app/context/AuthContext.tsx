@@ -53,10 +53,10 @@ const AuthContextProvider: React.FC<PropsWithChildren> = (props) => {
   }
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const authDetail = getCookie("auth");
-      if (authDetail) setAuth(authDetail);
-    }
+    // if (typeof window !== "undefined") {
+    //   const authDetail = getCookie("auth");
+    //   if (authDetail) setAuth(authDetail);
+    // }
   }, []);
 
   return (
