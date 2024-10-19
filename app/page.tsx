@@ -139,7 +139,7 @@ export default function Home() {
         <span className="text-gray-900">Hello {username}!</span>
         <button
           className="p-2 m-2 bg-red-600 text-white font-semibold"
-          onClick={onLogout}
+          onClick={()=>{onLogout()}}
         >
           Logout
         </button>

@@ -36,6 +36,7 @@ const AuthContextProvider: React.FC<PropsWithChildren> = (props) => {
       isLoggedIn: true,
       username,
     });
+    if(typeof window !== undefined)
     setCookie('auth',JSON.stringify({
       isLoggedIn: true,
       username,
