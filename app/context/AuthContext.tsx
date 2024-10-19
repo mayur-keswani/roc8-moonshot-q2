@@ -32,27 +32,31 @@ const AuthContextProvider: React.FC<PropsWithChildren> = (props) => {
   });
 
   function onLogin(username: string) {
-    setAuth({
-      isLoggedIn: true,
-      username,
-    });
-    if(typeof window !== undefined)
-    setCookie('auth',JSON.stringify({
-      isLoggedIn: true,
-      username,
-    }))
+    if (typeof window !== "undefined") {
+      setAuth({
+        isLoggedIn: true,
+        username,
+      });
+
+      setCookie(
+        "auth",
+        JSON.stringify({
+          isLoggedIn: true,
+          username,
+        })
+      );
+    }
   }
   function onLogout() {
     setAuth({ isLoggedIn: false, username: "" });
-    router.push('/login')
+    router.push("/login");
   }
 
   useEffect(() => {
-    const authDetail = getCookie("auth");
-    if(authDetail)
-      setAuth(authDetail);
-    // else
-    //   onLogout()
+    if (typeof window !== "undefined") {
+      const authDetail = getCookie("auth");
+      if (authDetail) setAuth(authDetail);
+    }
   }, []);
 
   return (

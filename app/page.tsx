@@ -8,16 +8,18 @@ import {
   excelDataType,
 } from "./types/custTypes";
 import LineChart from "./components/LineChat";
-import { DateRangePicker } from "react-date-range";
+const DateRangePicker = dynamic(() => import("react-date-range").then(mod => mod.DateRangePicker), { ssr: false });
 import { addDays } from "date-fns";
 import format from "date-fns/format";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { getCookie, setCookie } from "./helper";
 import { useSearchParams, useRouter } from "next/navigation";
-import Select from "react-select";
+const Select = dynamic(() => import("react-select"));
+// import Select from "react-select";
 import axios from "axios";
 import { AuthContext } from "./context/AuthContext";
+import dynamic from "next/dynamic";
 
 export default function Home() {
   const router = useRouter();
@@ -60,40 +62,41 @@ export default function Home() {
   };
 
   const onFilterChange = (selectedOptions: any) => {
-    console.log({ selectedOptions });
-    // Allow to select only one option from one optgroup
-    const uniqueByGroup = selectedOptions.reduce(
-      (acc: FiltersType[], currentOption: { group: string }) => {
-        const groupExists = acc.find(
-          (option: FiltersType) => option.group === currentOption.group
-        );
-        if (groupExists) {
-          // Replace existing option in the same group
-          return acc.map((option) =>
-            option.group === currentOption.group ? currentOption : option
+    if (typeof window !== "undefined") {
+      // Allow to select only one option from one optgroup
+      const uniqueByGroup = selectedOptions.reduce(
+        (acc: FiltersType[], currentOption: { group: string }) => {
+          const groupExists = acc.find(
+            (option: FiltersType) => option.group === currentOption.group
           );
-        } else {
-          return [...acc, currentOption];
-        }
-      },
-      []
-    );
-    setFilters(uniqueByGroup);
+          if (groupExists) {
+            // Replace existing option in the same group
+            return acc.map((option) =>
+              option.group === currentOption.group ? currentOption : option
+            );
+          } else {
+            return [...acc, currentOption];
+          }
+        },
+        []
+      );
+      setFilters(uniqueByGroup);
 
-    setCookie("filters", JSON.stringify(uniqueByGroup));
+      setCookie("filters", JSON.stringify(uniqueByGroup));
 
-    const params = new URLSearchParams();
-    if (selectedOptions?.length === 0) {
-      router.push("/");
+      const params = new URLSearchParams();
+      if (selectedOptions?.length === 0) {
+        router.push("/");
+      }
+      selectedOptions.forEach((option: FiltersType) => {
+        params.set(option.group, option.value);
+        router.push(`?${params.toString()}`); // Use shallow to avoid full page reload
+      });
     }
-    selectedOptions.forEach((option: FiltersType) => {
-      params.set(option.group, option.value);
-      router.push(`?${params.toString()}`); // Use shallow to avoid full page reload
-    });
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== ""undefined"") {
       (async () => {
         await fetchData();
         let queryParamsArray: FiltersType[] = [];
